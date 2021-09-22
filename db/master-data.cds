@@ -8,12 +8,6 @@ entity ProductGroups {
     imageURL   : String @UI.IsImageURL;
     imageType  : String @Core.IsMediaType;
 }
-entity UnitOfMeasure {
-    key msehi   : String(3);
-        dimid   : String(6);
-        isocode : String(3);
-        name    : String(30);
-}
 entity Phases {
     key ID     : Integer;
     name       : String(20);

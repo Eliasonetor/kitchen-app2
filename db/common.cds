@@ -13,17 +13,14 @@ extend sap.common.Currencies with {
     minor    : String;
 }
 
-type CurrencyType : Decimal(15, 2)@(
-    Semantics.amount.currencyCode : 'CURRENCY_code',
-    sap.unit                      : 'CURRENCY_code'
-);
-
-aspect Accounting {
-    currency             : Currency;
-    price                : CurrencyType;
-    taxRate              : CurrencyType;
-    productNetAmount     : CurrencyType;
-    productTaxAmount     : CurrencyType;
-    productGrossAmount   : CurrencyType;
-    productTotalQuantity : CurrencyType;
+type Measure : Association to UnitOfMeasure;
+entity UnitOfMeasure {
+    key msehi   : String(3);
+        dimid   : String(6);
+        isocode : String(3);
+        name    : String(30);
 }
+
+
+
+
