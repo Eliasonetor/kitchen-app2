@@ -58,6 +58,17 @@
                     "pattern": "Products({key})",
                     "name": "ProductsDetails",
                     "target": "ProductsDetails"
+                },
+                
+                {
+                    "pattern": "Products({key})/market({key2}):?query:",
+                    "name": "MarketsObjectPage",
+                    "target": "MarketsObjectPage"
+                },
+                {
+                    "pattern": "Products({key})/market({key2})/order({key3}):?query:",
+                    "name": "OrdersObjectPage",
+                    "target": "OrdersObjectPage"
                 }
  
             ],
@@ -89,7 +100,41 @@
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
-                            "entitySet": "Products"
+                            "entitySet": "Markets",
+                            "navigation": {
+                                "market": {
+                                    "detail": {
+                                        "route": "MarketsObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "MarketsObjectPage": {
+                    "type": "Component",
+                    "id": "MarketsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Orders",
+                            "navigation": {
+                                "order": {
+                                    "detail": {
+                                        "route": "OrdersObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "OrdersObjectPage": {
+                    "type": "Component",
+                    "id": "OrdersObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Orders"
                         }
                     }
                 }

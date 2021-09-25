@@ -96,6 +96,135 @@ annotate ProductService.Products with @(
         }
         ]
     },
+    {
+        $Type  : 'UI.ReferenceFacet',
+        Label  : '{i18n>marketsInfo}',
+        Target : 'market/@UI.LineItem'
+    }
     ]
   
+);
+
+annotate ProductService.Markets with @ (
+ UI: {
+ Identification: [{Value: toMarketInfos_ID }],
+ SelectionFields: [toMarketInfos_ID],
+ LineItem: [
+     { $Type : 'UI.DataField', Value: toMarketInfos.imageURL, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: toMarketInfos_ID, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: startDate, ![@UI.Importance]: #High }, 
+     { $Type : 'UI.DataField', Value: endDate, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: status, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: marketNetAmount, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: marketTaxAmount, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: marketGrossAmount, ![@UI.Importance]: #High } 
+ ],
+ HeaderInfo : { TypeName: 'Market', TypeNamePlural : 'Markets', Title : {Value : toMarketInfos_ID} },
+ HeaderFacets : [{ $Type: 'UI.ReferenceFacet', Target: '@UI.FieldGroup#Description', ![@UI.Importance] : #Medium }],
+        FieldGroup #Description        : {Data : [
+        {   $Type : 'UI.DataField', Value : toMarketInfos_ID },
+        {   $Type : 'UI.DataField', Value : toMarketInfos.imageURL },
+        ]},
+        FieldGroup #Details : {Data : [
+        {   $Type : 'UI.DataField', Value : startDate },
+        {   $Type : 'UI.DataField', Value : endDate, ![@UI.Importance] : #Medium },
+        {   $Type : 'UI.DataField', Value : status, ![@UI.Importance] : #Medium },
+        {   $Type : 'UI.DataField', Value : marketNetAmount, ![@UI.Importance] : #Medium },
+        {   $Type : 'UI.DataField', Value : marketTaxAmount, ![@UI.Importance] : #Medium },
+        {   $Type : 'UI.DataField', Value : marketGrossAmount, ![@UI.Importance] : #Medium }
+        ]}
+    },
+     UI.Facets : [
+    {
+        $Type  : 'UI.CollectionFacet',
+        ID     : 'PODetails2',
+        Label  : '{i18n>marketInfo}',
+        Facets : [{
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>marketInfo}',
+            Target : '@UI.FieldGroup#Description'
+        }
+        ]
+    },
+      {
+        $Type  : 'UI.CollectionFacet',
+        ID     : 'POAdmininfo2',
+        Label  : '{i18n>marketDetails}',
+        Facets : [{
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>marketDetails}',
+            Target : '@UI.FieldGroup#Details'
+        }        ]
+    },
+    {
+        $Type  : 'UI.ReferenceFacet',
+        Label  : '{i18n>ordersInfo}',
+        Target : 'order/@UI.LineItem'
+    }
+    ]
+);
+
+annotate ProductService.Orders with @ (
+ UI: {
+ Identification: [{Value: deliveryDate}],
+ SelectionFields: [deliveryDate],
+ LineItem: [
+     { $Type : 'UI.DataField', Value: order_ID, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: deliveryDate, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: quantity,![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: calendarYear, ![@UI.Importance]: #High }, 
+     { $Type : 'UI.DataField', Value: orderNetAmount, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: orderTaxAmount, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: orderGrossAmount, ![@UI.Importance]: #High },
+ ],
+ HeaderInfo : { TypeName: 'Order', TypeNamePlural: 'Orders', Title: {Value : deliveryDate},},
+ HeaderFacets : [
+        {
+            $Type             : 'UI.ReferenceFacet',
+            Target            : '@UI.FieldGroup#Description',
+            ![@UI.Importance] : #Medium
+        }
+        ],
+        FieldGroup #Description: {Data : [
+        { $Type : 'UI.DataField', Value : order_ID },
+        { $Type : 'UI.DataField', Value : deliveryDate },
+        { $Type : 'UI.DataField', Value : quantity },
+        { $Type : 'UI.DataField', Value : calendarYear }       
+        ]},
+        FieldGroup #Details : {Data : [
+        {   $Type : 'UI.DataField', Value : orderNetAmount, ![@UI.Importance] : #Medium },
+        {   $Type : 'UI.DataField', Value : orderTaxAmount, ![@UI.Importance] : #Medium },
+        {   $Type : 'UI.DataField', Value : orderGrossAmount, ![@UI.Importance] : #Medium },
+        ]},
+        FieldGroup #AdministrativeData : {Data : [
+        {  $Type : 'UI.DataField', Value : createdBy },
+        {  $Type : 'UI.DataField', Value : createdAt },
+        {  $Type : 'UI.DataField', Value : modifiedBy },
+        {  $Type : 'UI.DataField', Value : modifiedAt }]}},
+UI.Facets : [
+    {   $Type  : 'UI.CollectionFacet',
+        ID     : 'PODetails3',
+        Label  : '{i18n>orderInfo}',
+        Facets : [{
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>orderInfo}',
+            Target : '@UI.FieldGroup#Description'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>orderInfo}',
+            Target : '@UI.FieldGroup#Details'
+        }
+        ]
+    },
+      { $Type  : 'UI.CollectionFacet',
+        ID     : 'POAdmininfo3',
+        Label  : '{i18n>adminInfo}',
+        Facets : [{
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>adminInfo}',
+            Target : '@UI.FieldGroup#AdministrativeData'
+        }]
+    }
+    ]
 );
