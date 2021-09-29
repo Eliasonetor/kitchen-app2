@@ -19,4 +19,31 @@ annotate ProductService.Products with {
 
 annotate ProductService.UnitOfMeasure {
     msehi @title : '{i18n>msehi}';
+};
+
+annotate ProductService.Markets with{
+    toProduct         @title : '{i18n>toProduct}';
+    toMarketInfos     @title : '{i18n>toMarketInfos}' @Common.Text: toMarketInfos.name @Common.TextArrangement: #TextFirst;
+    startDate         @title : '{i18n>startDate}';
+    endDate           @title : '{i18n>endDate}';
+    status            @title : '{i18n>status}';
+    marketNetAmount   @title : '{i18n>marketNetAmount}'@Measures.ISOCurrency: currencyCode_code;
+    marketTaxAmount   @title : '{i18n>marketTaxAmount}'@Measures.ISOCurrency: currencyCode_code;
+    marketGrossAmount @title : '{i18n>marketGrossAmount}'@Measures.ISOCurrency: currencyCode_code;
+    currencyCode      @title : '{i18n>currencyCode}';
+};
+
+annotate ProductService.Orders {
+    toMarket         @title : '{i18n>toMarket}';
+    order_ID         @title : '{i18n>order_ID}';
+    quantity         @title : '{i18n>quantity}';
+    calendarYear     @title : '{i18n>calendarYear}';
+    deliveryDate     @title : '{i18n>deliveryDate}';
+    orderNetAmount   @title : '{i18n>orderNetAmount}' @Measures.ISOCurrency: currencyCode_code;
+    orderTaxAmount   @title : '{i18n>orderTaxAmount}' @Measures.ISOCurrency: currencyCode_code;
+    orderGrossAmount @title : '{i18n>orderGrossAmount}' @Measures.ISOCurrency: currencyCode_code;
+    currencyCode     @title : '{i18n>currencyCode}';
 }
+
+
+

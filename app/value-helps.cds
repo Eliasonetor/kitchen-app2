@@ -35,14 +35,28 @@ annotate schema.Products {
     SearchSupported : true
   };
 
-    phase @Common.ValueList: {
-    CollectionPath : 'Phases',
-    Label : 'Phases',
+//     phase @Common.ValueList: {
+//     CollectionPath : 'Phases',
+//     Label : 'Phases',
+//     Parameters : [
+//       {$Type: 'Common.ValueListParameterInOut', LocalDataProperty: phase_ID, ValueListProperty: 'ID'},
+//       {$Type: 'Common.ValueListParameterDisplayOnly', ValueListProperty: 'name'}
+//     ],
+//     SearchSupported : true
+//   };
+
+}
+
+annotate schema.Markets {
+    toMarketInfos @Common.ValueList: {
+    CollectionPath : 'MarketInfos',
+    Label : 'MarketInfos',
     Parameters : [
-      {$Type: 'Common.ValueListParameterInOut', LocalDataProperty: phase_ID, ValueListProperty: 'ID'},
-      {$Type: 'Common.ValueListParameterDisplayOnly', ValueListProperty: 'name'}
+      {$Type: 'Common.ValueListParameterInOut', LocalDataProperty: toMarketInfos_ID, ValueListProperty: 'ID'},
+      {$Type: 'Common.ValueListParameterDisplayOnly', ValueListProperty: 'name'},
+      {$Type: 'Common.ValueListParameterDisplayOnly', ValueListProperty: 'code'}
     ],
     SearchSupported : true
   };
-
 }
+
