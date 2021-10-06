@@ -19,13 +19,13 @@ annotate ProductService.Markets {
     toMarketInfos @Common.FieldControl : #Mandatory;
     startDate     @Common.FieldControl : #Mandatory;
     endDate       @Common.FieldControl : #Mandatory;
-    status        @Common.FieldControl : #ReadOnly;
+    // status        @Common.FieldControl : #ReadOnly;
 };
 annotate ProductService.Orders {
-    order_ID @Common.FieldControl : #ReadOnly;
+    // order_ID @Common.FieldControl : #ReadOnly;
     deliveryDate @Common.FieldControl : #Mandatory;
     quantity @Common.FieldControl : #Mandatory;
-    calendarYear @Common.FieldControl : #Mandatory;
+    // calendarYear @Common.FieldControl : #Mandatory;
 }
 
 
