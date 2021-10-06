@@ -34,7 +34,7 @@ entity Markets : managed, cuid {
     toMarketInfos     : Association to masterdata.MarketInfos;
     startDate         : Date;
     endDate           : Date;
-    status            : Boolean;
+    status            : String;
     marketNetAmount   : Decimal(15, 2);
     marketTaxAmount   : Decimal(15, 2);
     marketGrossAmount : Decimal(15, 2);

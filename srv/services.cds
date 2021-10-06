@@ -5,7 +5,11 @@ using sap.common as common from '@sap/cds/common';
 
 service ProductService  {
     entity Products as projection on schema.Products;
-    entity Markets as projection on schema.Markets;
+    entity Markets as projection on schema.Markets
+    actions {
+        @sap.applicable.path: 'confirmMarketButtonEnabled'
+        action confirmMarket();
+    };
     entity Orders as projection on schema.Orders;
     @cds.autoexpose entity ProductGroups as projection on masterdata.ProductGroups;
     @cds.autoexpose entity UnitOfMeasure as projection on mycommon.UnitOfMeasure;

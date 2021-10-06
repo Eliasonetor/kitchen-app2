@@ -110,6 +110,7 @@ annotate ProductService.Markets with @ (
  Identification: [{Value: toMarketInfos_ID }],
  SelectionFields: [toMarketInfos_ID],
  LineItem: [
+     { $Type  : 'UI.DataFieldForAction', Action : 'ProductService.confirmMarket',   Label  : '{i18n>confirmMarket}'   },
      { $Type : 'UI.DataField', Value: toMarketInfos.imageURL, ![@UI.Importance]: #High },
      { $Type : 'UI.DataField', Value: toMarketInfos_ID, ![@UI.Importance]: #High },
      { $Type : 'UI.DataField', Value: startDate, ![@UI.Importance]: #High }, 
