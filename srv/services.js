@@ -1,5 +1,12 @@
 const cds = require('@sap/cds');require('./workarounds')
 
+const FieldControl = {
+    Mandatory: 7,
+    Optional: 3,
+    ReadOnly: 1,
+    Inapplicable: 0,
+};
+
 class ProductService extends cds.ApplicationService{
     init(){
         const { Products, Markets, Orders } = this.entities
@@ -82,9 +89,18 @@ class ProductService extends cds.ApplicationService{
             })
         })
 
-        this.before ('NEW', 'Markets', async (req) => {
-            req.data.status = 'NO'
+        this.before ('NEW', 'Markets', async (req) =>{
+            const { toProduct_ID } = req.data
+            const {currencyCode} = await SELECT.one `currencyCode_code as currencyCode` .from(Products.drafts) .where({ ID:toProduct_ID })
+            req.data.currencyCode_code = currencyCode
         })
+
+        // this.before ('READ', 'Markets', async (req) =>{
+        //     if(req.data.order.length != 0)
+        //     {
+        //         let i = 0
+        //     }
+        // })
 
         this.on ('confirmMarket', req => {
             return UPDATE (req._target) .with ({status:'YES'})
@@ -111,12 +127,12 @@ class ProductService extends cds.ApplicationService{
         })
 
         this.after ('PATCH', 'Orders', (_,req) => { if ('quantity' in req.data) {
-            const {ID} = req.data
-            return this._update_totals (ID)
+            const {ID,quantity} = req.data
+            return this._update_totals (ID,quantity)
         }})
 
-        this._update_totals = async function (order) {
-            const {quantity} = await SELECT.one `quantity` .from(Orders.drafts,order)
+        this._update_totals = async function (order,quantity) {
+            // const {quantity} = await SELECT.one `quantity` .from(Orders.drafts,order)
             const {toMarket_ID} = await SELECT.one `toMarket_ID` .from(Orders.drafts,order)
             const {toProduct_ID} = await SELECT.one `toProduct_ID` .from(Markets.drafts,toMarket_ID)
             const {price} = await SELECT.one `price` .from(Products.drafts,toProduct_ID)
@@ -126,7 +142,34 @@ class ProductService extends cds.ApplicationService{
                 orderTaxAmount:quantity * price * (taxRate/100),
                 orderGrossAmount:(quantity * price) + (quantity * price * (taxRate/100))
             })
+        }
 
+        this.after (['READ','EDIT'], 'Orders', setTechnicalFlags);
+
+        function setTechnicalFlags (Orders) {
+
+            function _setFlags (Orders) {
+                Orders.isDraft = !Orders.IsActiveEntity;
+                if (Orders.IsActiveEntity) {
+                    // Orders.identifierFieldControl = FieldControl.Optional;
+                } 
+                else if (Orders.HasActiveEntity) {
+                    Orders.identifierFieldControl = FieldControl.ReadOnly;
+                    let i = 0;
+                } 
+                else {
+                    Orders.identifierFieldControl = FieldControl.Mandatory;
+                    let j = 0;
+                }
+            }
+
+            if (Array.isArray(Orders)) {
+                Orders.forEach(_setFlags);
+            }
+            else {
+                _setFlags(Orders);
+            }
+            
         }
 
         return super.init()

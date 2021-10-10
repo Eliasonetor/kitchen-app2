@@ -24,33 +24,34 @@ entity Products : cuid, managed {
     productNetAmount     : Decimal(15, 2);
     productTaxAmount     : Decimal(15, 2);
     productGrossAmount   : Decimal(15, 2);
-    productTotalQuantity : Decimal(15, 2);
+    productTotalQuantity : Integer default 0;
     @cascade : {all}
     market   : Composition of many Markets on market.toProduct = $self; 
 }
 
 entity Markets : managed, cuid {
-    toProduct         : Association to Products;
-    toMarketInfos     : Association to masterdata.MarketInfos;
-    startDate         : Date;
-    endDate           : Date;
-    status            : String;
-    marketNetAmount   : Decimal(15, 2);
-    marketTaxAmount   : Decimal(15, 2);
-    marketGrossAmount : Decimal(15, 2);
-    currencyCode      : Currency;
+    toProduct           : Association to Products;
+    toMarketInfos       : Association to masterdata.MarketInfos;
+    startDate           : Date;
+    endDate             : Date;
+    status              : String default 'NO';
+    marketNetAmount     : Decimal(15, 2);
+    marketTaxAmount     : Decimal(15, 2);
+    marketGrossAmount   : Decimal(15, 2);
+    marketTotalQuantity : Integer default 0;
+    currencyCode        : Currency;
     @cascade : {all}
     order   : Composition of many Orders on order.toMarket = $self;
 }
  
 entity Orders : managed, cuid {
-    toMarket     : Association to Markets;
-    order_ID     : Integer;
-    quantity     : Integer;
-    calendarYear : String;
-    deliveryDate : Date;
-    orderNetAmount     : Decimal(15, 2);
-    orderTaxAmount     : Decimal(15, 2);
-    orderGrossAmount   : Decimal(15, 2);
-    currencyCode      : Currency;
+    toMarket         : Association to Markets;
+    order_ID         : Integer;
+    quantity         : Integer;
+    calendarYear     : String;
+    deliveryDate     : Date;
+    orderNetAmount   : Decimal(15, 2);
+    orderTaxAmount   : Decimal(15, 2);
+    orderGrossAmount : Decimal(15, 2);
+    currencyCode     : Currency;
 }

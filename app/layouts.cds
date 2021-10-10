@@ -118,7 +118,8 @@ annotate ProductService.Markets with @ (
      { $Type : 'UI.DataField', Value: status, ![@UI.Importance]: #High },
      { $Type : 'UI.DataField', Value: marketNetAmount, ![@UI.Importance]: #High },
      { $Type : 'UI.DataField', Value: marketTaxAmount, ![@UI.Importance]: #High },
-     { $Type : 'UI.DataField', Value: marketGrossAmount, ![@UI.Importance]: #High } 
+     { $Type : 'UI.DataField', Value: marketGrossAmount, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: marketTotalQuantity, ![@UI.Importance]: #High }  
  ],
  HeaderInfo : { TypeName: 'Market', TypeNamePlural : 'Markets', Title : {Value : toMarketInfos_ID} },
  HeaderFacets : [{ $Type: 'UI.ReferenceFacet', Target: '@UI.FieldGroup#Description', ![@UI.Importance] : #Medium }],
@@ -132,7 +133,8 @@ annotate ProductService.Markets with @ (
         {   $Type : 'UI.DataField', Value : status, ![@UI.Importance] : #Medium },
         {   $Type : 'UI.DataField', Value : marketNetAmount, ![@UI.Importance] : #Medium },
         {   $Type : 'UI.DataField', Value : marketTaxAmount, ![@UI.Importance] : #Medium },
-        {   $Type : 'UI.DataField', Value : marketGrossAmount, ![@UI.Importance] : #Medium }
+        {   $Type : 'UI.DataField', Value : marketGrossAmount, ![@UI.Importance] : #Medium },
+        {   $Type : 'UI.DataField', Value : marketTotalQuantity, ![@UI.Importance] : #Medium }
         ]}
     },
      UI.Facets : [

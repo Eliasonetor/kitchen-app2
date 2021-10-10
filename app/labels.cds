@@ -30,6 +30,7 @@ annotate ProductService.Markets with{
     marketNetAmount   @title : '{i18n>marketNetAmount}'@Measures.ISOCurrency: currencyCode_code;
     marketTaxAmount   @title : '{i18n>marketTaxAmount}'@Measures.ISOCurrency: currencyCode_code;
     marketGrossAmount @title : '{i18n>marketGrossAmount}'@Measures.ISOCurrency: currencyCode_code;
+    marketTotalQuantity @title : '{i18n>marketTotalQuantity}';
     currencyCode      @title : '{i18n>currencyCode}';
 };
 
