@@ -4,7 +4,7 @@ const FieldControl = {
     Mandatory: 7,
     Optional: 3,
     ReadOnly: 1,
-    Inapplicable: 0,
+    Inapplicable: 0
 };
 
 class ProductService extends cds.ApplicationService{
@@ -95,16 +95,33 @@ class ProductService extends cds.ApplicationService{
             req.data.currencyCode_code = currencyCode
         })
 
-        // this.before ('READ', 'Markets', async (req) =>{
-        //     if(req.data.order.length != 0)
+        // this.before ('SAVE', 'Products', async (req) => {
+        //     if( req.data.market.length != 0 )
         //     {
         //         let i = 0
+        //         let j = 0
+        //         while (i < req.data.market.length) {
+        //             let v = req.data.market[i].order.length
+        //             if( req.data.market[i].order.length != 0 ) {
+        //                 let k = 0
+        //                 // while (k < req.data.market[i].order.length) {
+        //                 //     const {orderID} = req.data.market[i].order[k].ID
+        //                 //     const {orderNetAmount,orderTaxAmount,orderGrossAmount,quantity} = await SELECT.one `orderNetAmount,orderTaxAmount,orderGrossAmount,quantity` .from(Orders.drafts,orderID)
+        //                 //     let l = 0
+        //                 // }
+        //                 const {ID} = req.data.market[i]
+        //                 // const {netAmount,taxAmount,grossAmount,totalQuantity} = await SELECT.one `sum(orderNetAmount) as netAmount,sum(orderTaxAmount) as taxAmount,sum(orderGrossAmount) as grossAmount,sum(quantity) as totalQuantity` .from(Orders.drafts) .where({ toMarket_ID:ID })
+        //                 const {totalQuantity} = await SELECT.one `sum(quantity) as totalQuantity` .from(Orders.drafts) .where({ toMarket_ID:ID })
+        //                 return UPDATE (Markets.drafts,ID) .with({ marketTotalQuantity:totalQuantity })
+        //                 let j =0
+        //             }
+        //             i++
+        //         }
         //     }
         // })
 
         this.on ('confirmMarket', req => {
             return UPDATE (req._target) .with ({status:'YES'})
-            let i = 0;
         })
 
         this.before ('NEW','Orders', async (req) => {
@@ -113,11 +130,13 @@ class ProductService extends cds.ApplicationService{
             req.data.order_ID = orderID + 1;
         })
 
-        this.after ('PATCH', 'Orders', async (_,req) => { if ('deliveryDate' in req.data) {
-            const {deliveryDate,ID} = req.data
-            let calendarYear = (new Date (deliveryDate)).getFullYear()
-            return UPDATE (Orders.drafts,ID) .with ({calendarYear: calendarYear })
-        }})
+        this.after ('PATCH', 'Orders', async (_,req) => { 
+            if ('deliveryDate' in req.data) {
+                const {deliveryDate,ID} = req.data
+                let calendarYear = (new Date (deliveryDate)).getFullYear()
+                return UPDATE (Orders.drafts,ID) .with ({calendarYear: calendarYear })
+            }
+    })
 
         this.before ('NEW', 'Orders', async (req) =>{
             const { toMarket_ID } = req.data
@@ -132,7 +151,6 @@ class ProductService extends cds.ApplicationService{
         }})
 
         this._update_totals = async function (order,quantity) {
-            // const {quantity} = await SELECT.one `quantity` .from(Orders.drafts,order)
             const {toMarket_ID} = await SELECT.one `toMarket_ID` .from(Orders.drafts,order)
             const {toProduct_ID} = await SELECT.one `toProduct_ID` .from(Markets.drafts,toMarket_ID)
             const {price} = await SELECT.one `price` .from(Products.drafts,toProduct_ID)
@@ -144,32 +162,54 @@ class ProductService extends cds.ApplicationService{
             })
         }
 
-        this.after (['READ','EDIT'], 'Orders', setTechnicalFlags);
+    //     this.after ('PATCH', 'Orders', async (_,req) => { 
+    //         if (`quantity` in req.data) {
+    //             const {quantity,ID} = req.data
+    //             const {MarketID} = await SELECT.one `toMarket_ID as MarketID` .from(Orders.drafts,ID)
+    //             const {netAmount,taxAmount,grossAmount,totalQuantity} = await SELECT.one `sum(orderNetAmount) as netAmount,sum(orderTaxAmount) as taxAmount,sum(orderGrossAmount) as grossAmount,sum(quantity) as totalQuantity` .from(Orders.drafts) .where({ toMarket_ID:MarketID })
+    //             let i = 0
+    //             return UPDATE (Markets.drafts,MarketID) .with ({marketTotalQuantity: totalQuantity,marketNetAmount: netAmount,marketTaxAmount: taxAmount,marketGrossAmount: grossAmount })
+    //         }
+    // })
 
-        function setTechnicalFlags (Orders) {
+        this.after (['READ','EDIT'], 'Orders', setTechnicalFlagsOrder);
 
-            function _setFlags (Orders) {
-                Orders.isDraft = !Orders.IsActiveEntity;
-                if (Orders.IsActiveEntity) {
-                    // Orders.identifierFieldControl = FieldControl.Optional;
-                } 
-                else if (Orders.HasActiveEntity) {
-                    Orders.identifierFieldControl = FieldControl.ReadOnly;
-                    let i = 0;
-                } 
-                else {
-                    Orders.identifierFieldControl = FieldControl.Mandatory;
-                    let j = 0;
-                }
+        function setTechnicalFlagsOrder (Orders) {
+
+            function _setFlagsReadOrder (Orders) {
+                Orders.identifierFieldControlOrder = FieldControl.ReadOnly;
+            }
+            function _setFlagsEditOrder (Orders) {
+                Orders.identifierFieldControlOrder = FieldControl.Mandatory;
             }
 
             if (Array.isArray(Orders)) {
-                Orders.forEach(_setFlags);
+                Orders.forEach(_setFlagsReadOrder);
             }
             else {
-                _setFlags(Orders);
+                _setFlagsEditOrder(Orders);
             }
             
+        }
+
+        this.after (['READ','EDIT'], 'Markets', setTechnicalFlagsMarket);
+
+        function setTechnicalFlagsMarket (Markets) {
+
+            function _setFlagsReadMarket (Markets) {
+                Markets.identifierFieldControlMarket = FieldControl.ReadOnly;
+            }
+            function _setFlagsEditMarket (Markets) {
+                Markets.identifierFieldControlMarket = FieldControl.Mandatory;
+            }
+
+            if (Array.isArray(Markets)) {
+                Markets.forEach(_setFlagsReadMarket);
+            }
+            else {
+                _setFlagsEditMarket(Markets);
+            }
+
         }
 
         return super.init()

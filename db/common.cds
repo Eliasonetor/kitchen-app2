@@ -21,6 +21,7 @@ entity UnitOfMeasure {
         name    : String(30);
 }
 
-
-
-
+type TechnicalFieldControlFlag : Integer @(
+    UI.Hidden,
+    Core.Computed
+);

@@ -16,20 +16,26 @@ annotate ProductService.Products {
 };
 
 annotate ProductService.Markets {
-    toMarketInfos @Common.FieldControl : #Mandatory;
-    startDate     @Common.FieldControl : #Mandatory;
-    endDate       @Common.FieldControl : #Mandatory;
-    status        @Common.FieldControl : #ReadOnly;
+    toMarketInfos       @(Common.FieldControl: identifierFieldControlMarket);
+    startDate           @(Common.FieldControl: identifierFieldControlMarket);
+    endDate             @(Common.FieldControl: identifierFieldControlMarket);
+    status              @Common.FieldControl : #ReadOnly;
+    marketNetAmount     @Common.FieldControl : #ReadOnly;
+    marketTaxAmount     @Common.FieldControl : #ReadOnly;
+    marketGrossAmount   @Common.FieldControl : #ReadOnly;
+    marketTotalQuantity @Common.FieldControl : #ReadOnly;
 };
-// annotate ProductService.Orders {
-//     order_ID @Common.FieldControl : #ReadOnly;
-//     deliveryDate @Common.FieldControl : #Mandatory;
-//     quantity @Common.FieldControl : #Mandatory;
-//     calendarYear @Common.FieldControl : #ReadOnly;
-//     orderNetAmount @Common.FieldControl : #ReadOnly;
-//     orderTaxAmount @Common.FieldControl : #ReadOnly;
-//     orderGrossAmount @Common.FieldControl : #ReadOnly;
-//     currencyCode @Common.FieldControl : #ReadOnly;
-// }
+
+annotate ProductService.Orders {
+    order_ID @Common.FieldControl:#ReadOnly;
+    deliveryDate @(Common.FieldControl: identifierFieldControlOrder);
+    quantity @(Common.FieldControl: identifierFieldControlOrder);
+    calendarYear @Common.FieldControl:#ReadOnly;
+    orderNetAmount @Common.FieldControl:#ReadOnly;
+    orderTaxAmount @Common.FieldControl:#ReadOnly;
+    orderGrossAmount @Common.FieldControl:#ReadOnly;
+    currencyCode @Common.FieldControl:#ReadOnly;
+}
+
 
 

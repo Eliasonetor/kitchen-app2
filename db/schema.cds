@@ -2,6 +2,8 @@ namespace epam.sap.dev.schema;
 
 using {epam.sap.dev.masterdata} from './master-data';
 using {epam.sap.dev.common.Measure} from './common';
+using { epam.sap.dev.common.TechnicalFieldControlFlag } from './common';
+
 
 
 using {
@@ -40,6 +42,7 @@ entity Markets : managed, cuid {
     marketGrossAmount   : Decimal(15, 2);
     marketTotalQuantity : Integer default 0;
     currencyCode        : Currency;
+    identifierFieldControlMarket: TechnicalFieldControlFlag default 7;
     @cascade : {all}
     order   : Composition of many Orders on order.toMarket = $self;
 }
@@ -54,4 +57,5 @@ entity Orders : managed, cuid {
     orderTaxAmount   : Decimal(15, 2);
     orderGrossAmount : Decimal(15, 2);
     currencyCode     : Currency;
+    identifierFieldControlOrder: TechnicalFieldControlFlag default 7;
 }
