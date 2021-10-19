@@ -5,6 +5,7 @@ annotate ProductService.Products with @(
  SelectionFields: [toProductGroup_ID],
  Identification  : [ {Value: ID} ],
  LineItem: [
+     { $Type  : 'UI.DataFieldForAction', Action : 'ProductService.Move',   Label  : '{i18n>Move}' },
      { $Type : 'UI.DataField', Value : toProductGroup.imageURL, ![@UI.Importance]: #High },
      { $Type : 'UI.DataField', Value: toProductGroup_ID, ![@UI.Importance]: #High },  
      { $Type : 'UI.DataField', Value: product_ID, ![@UI.Importance]: #High },
@@ -110,7 +111,7 @@ annotate ProductService.Markets with @ (
  Identification: [{Value: toMarketInfos_ID }],
  SelectionFields: [toMarketInfos_ID],
  LineItem: [
-     { $Type  : 'UI.DataFieldForAction', Action : 'ProductService.confirmMarket',   Label  : '{i18n>confirmMarket}'   },
+     { $Type  : 'UI.DataFieldForAction', Action : 'ProductService.confirmMarket',   Label  : '{i18n>confirmMarket}' },
      { $Type : 'UI.DataField', Value: toMarketInfos.imageURL, ![@UI.Importance]: #High },
      { $Type : 'UI.DataField', Value: toMarketInfos_ID, ![@UI.Importance]: #High },
      { $Type : 'UI.DataField', Value: startDate, ![@UI.Importance]: #High }, 
@@ -118,7 +119,8 @@ annotate ProductService.Markets with @ (
      { $Type : 'UI.DataField', Value: status, ![@UI.Importance]: #High },
      { $Type : 'UI.DataField', Value: marketNetAmount, ![@UI.Importance]: #High },
      { $Type : 'UI.DataField', Value: marketTaxAmount, ![@UI.Importance]: #High },
-     { $Type : 'UI.DataField', Value: marketGrossAmount, ![@UI.Importance]: #High } 
+     { $Type : 'UI.DataField', Value: marketGrossAmount, ![@UI.Importance]: #High },
+     { $Type : 'UI.DataField', Value: marketTotalQuantity, ![@UI.Importance]: #High }  
  ],
  HeaderInfo : { TypeName: 'Market', TypeNamePlural : 'Markets', Title : {Value : toMarketInfos_ID} },
  HeaderFacets : [{ $Type: 'UI.ReferenceFacet', Target: '@UI.FieldGroup#Description', ![@UI.Importance] : #Medium }],
@@ -132,7 +134,8 @@ annotate ProductService.Markets with @ (
         {   $Type : 'UI.DataField', Value : status, ![@UI.Importance] : #Medium },
         {   $Type : 'UI.DataField', Value : marketNetAmount, ![@UI.Importance] : #Medium },
         {   $Type : 'UI.DataField', Value : marketTaxAmount, ![@UI.Importance] : #Medium },
-        {   $Type : 'UI.DataField', Value : marketGrossAmount, ![@UI.Importance] : #Medium }
+        {   $Type : 'UI.DataField', Value : marketGrossAmount, ![@UI.Importance] : #Medium },
+        {   $Type : 'UI.DataField', Value : marketTotalQuantity, ![@UI.Importance] : #Medium }
         ]}
     },
      UI.Facets : [
@@ -229,3 +232,35 @@ UI.Facets : [
     }
     ]
 );
+annotate ProductService.Markets actions {
+    @(
+        Common.SideEffects : {
+            TargetEntities : [
+                _it,
+            ]
+        },
+        cds.odata.bindingparameter.name: '_it',
+        Core.OperationAvailable : _it.confirmMarketEnabled,
+        UI.FieldGroup
+    )
+    confirmMarket(
+        confirmMarket @title : 'ConfMarket'
+    );
+
+}
+annotate ProductService.Products actions {
+    @(
+        Common.SideEffects : {
+            TargetEntities : [
+                _it,
+            ]
+        },
+        cds.odata.bindingparameter.name: '_it',
+        Core.OperationAvailable : _it.MoveEnabled,
+        UI.FieldGroup
+    )
+    Move(
+        Move @title : 'Move'
+    );
+
+}
