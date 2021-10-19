@@ -4,10 +4,14 @@ using {epam.sap.dev.common as mycommon} from '../db/common';
 using sap.common as common from '@sap/cds/common';
 
 service ProductService  {
-    entity Products as projection on schema.Products;
+    entity Products as projection on schema.Products
+    actions {
+        @Core.OperationAvailable : in.MoveEnabled
+        action Move();
+    };
     entity Markets as projection on schema.Markets
     actions {
-        @sap.applicable.path: 'confirmMarketButtonEnabled'
+        @Core.OperationAvailable : in.confirmMarketEnabled
         action confirmMarket();
     };
     entity Orders as projection on schema.Orders;

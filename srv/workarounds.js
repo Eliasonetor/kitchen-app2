@@ -49,7 +49,7 @@ cds.extend (cds.Request) .with (class {
    */
    get _target() {
     let {target} = this, [key] = this.params
-    if (key && this.path.indexOf('/') < 0) { //> .../draftActivate
+    if (key && this.path.indexOf('/') > 0) { //> .../draftActivate
       // deviate to draft?
       const {IsActiveEntity} = key
       if (IsActiveEntity !== undefined) Object.defineProperty (key,'IsActiveEntity',{value:IsActiveEntity, enumerable:false}) //> skip as key in cqn

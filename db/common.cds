@@ -25,3 +25,8 @@ type TechnicalFieldControlFlag : Integer @(
     UI.Hidden,
     Core.Computed
 );
+
+type TechnicalBooleanFlag : Boolean @(
+    UI.Hidden,
+    Core.Computed
+);
