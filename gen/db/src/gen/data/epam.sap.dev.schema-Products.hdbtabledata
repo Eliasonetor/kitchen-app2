@@ -1,0 +1,45 @@
+{
+  "format_version": 1,
+  "imports": [
+    {
+      "target_table": "EPAM_SAP_DEV_SCHEMA_PRODUCTS",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "epam.sap.dev.schema-Products.csv",
+        "has_header": true,
+        "type_config": {
+          "delimiter": ","
+        }
+      },
+      "import_settings": {
+        "import_columns": [
+          "ID",
+          "PRODUCT_ID",
+          "PRICE",
+          "TAXRATE",
+          "WIDTH",
+          "DEPTH",
+          "HEIGHT",
+          "TOPRODUCTGROUP_ID",
+          "PHASE_ID",
+          "CURRENCYCODE_CODE",
+          "MEASURE_MSEHI"
+        ],
+        "include_filter": []
+      },
+      "column_mappings": {
+        "ID": "ID",
+        "PRODUCT_ID": "product_ID",
+        "PRICE": "price",
+        "TAXRATE": "taxRate",
+        "WIDTH": "width",
+        "DEPTH": "depth",
+        "HEIGHT": "height",
+        "TOPRODUCTGROUP_ID": "toProductGroup_ID",
+        "PHASE_ID": "phase_ID",
+        "CURRENCYCODE_CODE": "currencyCode_code",
+        "MEASURE_MSEHI": "measure_msehi"
+      }
+    }
+  ]
+}
