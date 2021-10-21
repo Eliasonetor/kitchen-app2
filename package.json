@@ -8,9 +8,12 @@
   "dependencies": {
     "@sap/cds": "^5.4.6",
     "express": "^4",
-    "socket.io": "^4.2.0"
+    "socket.io": "^4.2.0",
+    "hdb": "^0.18.3",
+    "@sap/hana-client": "^2.10.15"
   },
   "devDependencies": {
+    "@sap/hdi-deploy": "^4.2.0",
     "sqlite3": "^5.0.2"
   },
   "scripts": {
@@ -42,13 +45,12 @@
     }
   },
   "cds": {
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
     "requires": {
       "db": {
-        "kind": "sqlite",
-        "model": "*",
-        "credentials": {
-          "database": "db/store.db"
-        }
+        "kind": "hana"
       }
     }
   }
