@@ -26,6 +26,7 @@ modules:
      buildpack: nodejs_buildpack
    requires:
     # Resources extracted from CAP configuration
+    - name: kitchen-app-logs
     - name: kitchen-app-db
    provides:
     - name: srv-api      # required by consumers of CAP services (e.g. approuter)
@@ -42,6 +43,7 @@ modules:
    requires:
     # 'hana' and 'xsuaa' resources extracted from CAP configuration
     - name: kitchen-app-db
+    - name: kitchen-app-logs
 
 
 resources:
@@ -56,5 +58,11 @@ resources:
      service-plan: hdi-shared
    properties:
      hdi-service-name: ${service-name}
-
-
+# ------------------------------------------------------------
+ - name: kitchen-app-logs
+# ------------------------------------------------------------
+   type: org.cloudfoundry.managed-service
+   parameters:
+    service: application-logs
+    service-plan: lite
+    
