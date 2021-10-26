@@ -14,10 +14,7 @@ VIEW ProductService_Markets AS SELECT
   Markets_0.marketTaxAmount,
   Markets_0.marketGrossAmount,
   Markets_0.marketTotalQuantity,
-  Markets_0.currencyCode_code,
-  Markets_0.identifierFieldControlMarket,
-  Markets_0.identifierFieldControlCalculated,
-  Markets_0.confirmMarketEnabled
+  Markets_0.currencyCode_code
 FROM epam_sap_dev_schema_Markets AS Markets_0
 WITH ASSOCIATIONS (
   MANY TO ONE JOIN ProductService_Products AS toProduct ON (toProduct.ID = toProduct_ID),

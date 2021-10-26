@@ -13,9 +13,7 @@ VIEW localized_epam_sap_dev_schema_Orders AS SELECT
   L.orderNetAmount,
   L.orderTaxAmount,
   L.orderGrossAmount,
-  L.currencyCode_code,
-  L.identifierFieldControlOrder,
-  L.identifierFieldControlCalculated
+  L.currencyCode_code
 FROM epam_sap_dev_schema_Orders AS L
 WITH ASSOCIATIONS (
   MANY TO ONE JOIN localized_epam_sap_dev_schema_Markets AS toMarket ON (toMarket.ID = toMarket_ID),

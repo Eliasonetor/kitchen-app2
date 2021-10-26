@@ -13,9 +13,7 @@ VIEW ProductService_Orders AS SELECT
   Orders_0.orderNetAmount,
   Orders_0.orderTaxAmount,
   Orders_0.orderGrossAmount,
-  Orders_0.currencyCode_code,
-  Orders_0.identifierFieldControlOrder,
-  Orders_0.identifierFieldControlCalculated
+  Orders_0.currencyCode_code
 FROM epam_sap_dev_schema_Orders AS Orders_0
 WITH ASSOCIATIONS (
   MANY TO ONE JOIN ProductService_Markets AS toMarket ON (toMarket.ID = toMarket_ID),

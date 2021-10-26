@@ -18,8 +18,7 @@ VIEW ProductService_Products AS SELECT
   Products_0.productNetAmount,
   Products_0.productTaxAmount,
   Products_0.productGrossAmount,
-  Products_0.productTotalQuantity,
-  Products_0.MoveEnabled
+  Products_0.productTotalQuantity
 FROM epam_sap_dev_schema_Products AS Products_0
 WITH ASSOCIATIONS (
   MANY TO ONE JOIN ProductService_ProductGroups AS toProductGroup ON (toProductGroup.ID = toProductGroup_ID),

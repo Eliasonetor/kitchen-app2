@@ -14,10 +14,7 @@ VIEW localized_epam_sap_dev_schema_Markets AS SELECT
   L.marketTaxAmount,
   L.marketGrossAmount,
   L.marketTotalQuantity,
-  L.currencyCode_code,
-  L.identifierFieldControlMarket,
-  L.identifierFieldControlCalculated,
-  L.confirmMarketEnabled
+  L.currencyCode_code
 FROM epam_sap_dev_schema_Markets AS L
 WITH ASSOCIATIONS (
   MANY TO ONE JOIN localized_epam_sap_dev_schema_Products AS toProduct ON (toProduct.ID = toProduct_ID),
