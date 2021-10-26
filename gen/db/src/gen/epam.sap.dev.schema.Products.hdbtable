@@ -15,11 +15,10 @@ COLUMN TABLE epam_sap_dev_schema_Products (
   price DECIMAL(15, 2),
   currencyCode_code NVARCHAR(3),
   taxRate INTEGER,
-  productNetAmount DECIMAL(15, 2),
-  productTaxAmount DECIMAL(15, 2),
-  productGrossAmount DECIMAL(15, 2),
+  productNetAmount DECIMAL(15, 2) DEFAULT 0,
+  productTaxAmount DECIMAL(15, 2) DEFAULT 0,
+  productGrossAmount DECIMAL(15, 2) DEFAULT 0,
   productTotalQuantity INTEGER DEFAULT 0,
-  MoveEnabled BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY(ID)
 ) WITH ASSOCIATIONS (
   MANY TO ONE JOIN epam_sap_dev_masterdata_ProductGroups AS toProductGroup ON (toProductGroup.ID = toProductGroup_ID),

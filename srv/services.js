@@ -44,7 +44,7 @@ class ProductService extends cds.ApplicationService{
         })
 
         this.before (['CREATE','NEW'],'Products', async (req) => {
-            req.data.phase_ID = 1
+            req.data.phase_ID = "1"
         })
         
         this.before ('SAVE','Products', async (req) => {
@@ -102,6 +102,18 @@ class ProductService extends cds.ApplicationService{
                 const productID = req.data.ID
                 const {netAmount,taxAmount,grossAmount,totalQuantity} = await SELECT.one `sum(marketNetAmount) as netAmount,sum(marketTaxAmount) as taxAmount,sum(marketGrossAmount) as grossAmount,sum(marketTotalQuantity) as totalQuantity` .from(Markets.drafts) .where({ toProduct_ID:productID })
                 return UPDATE (Products,productID) .with({ productNetAmount: netAmount,productTaxAmount: taxAmount,productGrossAmount: grossAmount,productTotalQuantity: totalQuantity })
+            }
+        })
+
+        this.before ('CREATE','Products', async (req) => {
+            if(req.data.market.length !=0)
+            {
+                const productID = req.data.ID
+                const {netAmount,taxAmount,grossAmount,totalQuantity} = await SELECT.one `sum(marketNetAmount) as netAmount,sum(marketTaxAmount) as taxAmount,sum(marketGrossAmount) as grossAmount,sum(marketTotalQuantity) as totalQuantity` .from(Markets.drafts) .where({ toProduct_ID:productID })
+                req.data.productNetAmount = netAmount;
+                req.data.productTaxAmount = taxAmount;
+                req.data.productGrossAmount = grossAmount;
+                req.data.productTotalQuantity = totalQuantity;
             }
         })
 
@@ -219,8 +231,17 @@ class ProductService extends cds.ApplicationService{
         }) 
 
         this.on ('confirmMarket','Markets', async (req) => {
-            const {ID} = req.params[1]
-            return UPDATE (Markets.drafts,ID) .with ({status:'YES'})
+            const {id} = req._target.ref[0]
+            if(id == 'ProductService.Markets')
+            {
+                const {ID} = req.params[1]
+                return UPDATE (Markets,ID) .with ({status:'YES'})
+            }
+            else
+            {
+                const {ID} = req.params[1]
+                return UPDATE (Markets.drafts,ID) .with ({status:'YES'})
+            }
         })
 
         this.before ('NEW','Orders', async (req) => {
@@ -233,6 +254,7 @@ class ProductService extends cds.ApplicationService{
             if ('deliveryDate' in req.data) {
                 const {deliveryDate,ID} = req.data
                 let calendarYear = (new Date (deliveryDate)).getFullYear()
+                calendarYear = String(calendarYear)
                 return UPDATE (Orders.drafts,ID) .with ({calendarYear: calendarYear })
             }
     })

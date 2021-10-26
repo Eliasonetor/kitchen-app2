@@ -25,11 +25,11 @@ entity Products : cuid, managed {
     price                : Decimal(15, 2);
     currencyCode         : Currency;
     taxRate              : Integer;
-    productNetAmount     : Decimal(15, 2);
-    productTaxAmount     : Decimal(15, 2);
-    productGrossAmount   : Decimal(15, 2);
+    productNetAmount     : Decimal(15, 2) default 0;
+    productTaxAmount     : Decimal(15, 2) default 0;
+    productGrossAmount   : Decimal(15, 2) default 0;
     productTotalQuantity : Integer default 0;
-    MoveEnabled : TechnicalBooleanFlag not null default false;
+    virtual MoveEnabled : TechnicalBooleanFlag not null default false;
     @cascade : {all}
     market   : Composition of many Markets on market.toProduct = $self; 
 }
@@ -40,14 +40,14 @@ entity Markets : managed, cuid {
     startDate           : Date;
     endDate             : Date;
     status              : String default 'NO';
-    marketNetAmount     : Decimal(15, 2);
-    marketTaxAmount     : Decimal(15, 2);
-    marketGrossAmount   : Decimal(15, 2);
+    marketNetAmount     : Decimal(15, 2) default 0;
+    marketTaxAmount     : Decimal(15, 2) default 0;
+    marketGrossAmount   : Decimal(15, 2) default 0;
     marketTotalQuantity : Integer default 0;
     currencyCode        : Currency;
-    identifierFieldControlMarket: TechnicalFieldControlFlag default 7;
-    identifierFieldControlCalculated: TechnicalFieldControlFlag default 7;
-    confirmMarketEnabled : TechnicalBooleanFlag not null default false;
+    virtual identifierFieldControlMarket: TechnicalFieldControlFlag default 7;
+    virtual identifierFieldControlCalculated: TechnicalFieldControlFlag default 7;
+    virtual confirmMarketEnabled : TechnicalBooleanFlag not null default false;
     @cascade : {all}
     order   : Composition of many Orders on order.toMarket = $self;
 }
@@ -58,10 +58,10 @@ entity Orders : managed, cuid {
     quantity         : Integer;
     calendarYear     : String;
     deliveryDate     : Date;
-    orderNetAmount   : Decimal(15, 2);
-    orderTaxAmount   : Decimal(15, 2);
-    orderGrossAmount : Decimal(15, 2);
+    orderNetAmount   : Decimal(15, 2) default 0;
+    orderTaxAmount   : Decimal(15, 2) default 0;
+    orderGrossAmount : Decimal(15, 2) default 0;
     currencyCode     : Currency;
-    identifierFieldControlOrder: TechnicalFieldControlFlag default 7;
-    identifierFieldControlCalculated: TechnicalFieldControlFlag default 7;
+    virtual identifierFieldControlOrder: TechnicalFieldControlFlag default 7;
+    virtual identifierFieldControlCalculated: TechnicalFieldControlFlag default 7;
 }

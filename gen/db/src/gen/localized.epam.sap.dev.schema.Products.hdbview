@@ -18,8 +18,7 @@ VIEW localized_epam_sap_dev_schema_Products AS SELECT
   L.productNetAmount,
   L.productTaxAmount,
   L.productGrossAmount,
-  L.productTotalQuantity,
-  L.MoveEnabled
+  L.productTotalQuantity
 FROM epam_sap_dev_schema_Products AS L
 WITH ASSOCIATIONS (
   MANY TO ONE JOIN epam_sap_dev_masterdata_ProductGroups AS toProductGroup ON (toProductGroup.ID = toProductGroup_ID),
