@@ -49,13 +49,13 @@
  
         "routing": {
             "routes": [{
-                    "pattern": "",
+                    "pattern": ":?query:",
                     "name": "ProductsList",
                     "target": "ProductsList"
                 },
  
                 {
-                    "pattern": "Products({key})",
+                    "pattern": "Products({key}):?query:",
                     "name": "ProductsDetails",
                     "target": "ProductsDetails"
                 },
@@ -100,6 +100,7 @@
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
+                            "editableHeaderContent": false,
                             "entitySet": "Markets",
                             "navigation": {
                                 "market": {
@@ -117,6 +118,7 @@
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
+                            "editableHeaderContent": false,
                             "entitySet": "Orders",
                             "navigation": {
                                 "order": {
@@ -134,6 +136,7 @@
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
+                            "editableHeaderContent": false,
                             "entitySet": "Orders"
                         }
                     }
