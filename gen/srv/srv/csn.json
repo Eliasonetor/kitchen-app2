@@ -760,7 +760,18 @@
     },
     "ProductService": {
       "@source": "srv/services.cds",
-      "kind": "service"
+      "kind": "service",
+      "@requires": "authenticated-user",
+      "@restrict": [
+        {
+          "grant": [
+            "*"
+          ],
+          "to": [
+            "StoreManager"
+          ]
+        }
+      ]
     },
     "ProductService.Products": {
       "kind": "entity",
