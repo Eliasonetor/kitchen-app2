@@ -1,20 +1,21 @@
 {
   "xsappname": "fiori",
   "tenant-mode": "dedicated",
-  "description": "Security profile of called application",
   "scopes": [
     {
-      "name": "uaa.user",
-      "description": "UAA"
+      "name": "$XSAPPNAME.StoreManager",
+      "description": "StoreManager"
     }
   ],
+  "attributes": [],
   "role-templates": [
     {
-      "name": "Token_Exchange",
-      "description": "UAA",
+      "name": "StoreManager",
+      "description": "generated",
       "scope-references": [
-        "uaa.user"
-      ]
+        "$XSAPPNAME.StoreManager"
+      ],
+      "attribute-references": []
     }
   ]
 }

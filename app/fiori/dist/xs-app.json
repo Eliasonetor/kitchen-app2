@@ -6,7 +6,6 @@
   },
   "routes": [
     {
-      "authenticationType": "none",
       "csrfProtection": false,
       "source": "^/product/",
       "destination": "kitchen-app"
